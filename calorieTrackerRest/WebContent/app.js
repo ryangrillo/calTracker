@@ -19,6 +19,7 @@ var startUp = function() {
 	});
 }
 var buildList = function(data) {
+	var h1Total = $('<h1>');
 	var table = $('<table>');
 	var thead = $('<thead>');
 	var tr = $('<tr>');
@@ -26,6 +27,7 @@ var buildList = function(data) {
 	tr.append(th);
 	thead.append(tr);
 	table.append(thead);
+	var total = 0;
 	data.forEach(function(tracker, idx, array) {
 		if (idx % 2) {
 			var tr = $('<tr>').css("background-color", "#ff9999");
@@ -79,6 +81,12 @@ var buildList = function(data) {
 			});
 		})
 		td.text(tracker.id + ". " + tracker.foodItem + " " +  tracker.calories);
+		
+		total += tracker.calories;
+		console.log("lenght:  " + tracker.size);
+		console.log("tracker.calories: " + tracker.calories);
+		console.log("total:  " + total);
+		h1Total.text("total Calories: " + total);
 		tr.append(td);
 		tr.append(input);
 		tr.append(deleteItem);
@@ -86,6 +94,7 @@ var buildList = function(data) {
 		table.append(tbody);
 	})
 	$('#table').append(table);
+	$('#table').append(h1Total);
 	var createTracker = $("<h3>");
 	createTracker.text("Add food and Calories");
 	$("#table").append(createTracker);
