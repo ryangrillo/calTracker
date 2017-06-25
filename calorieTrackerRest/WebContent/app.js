@@ -39,7 +39,7 @@ var buildList = function(data) {
 		var input = $('<button>');
 		input.addClass('button');
 		input.attr('id', tracker.id);
-		input.text('Description');
+		input.text('edit');
 		input.on('click', function() {
 			var myReq = $.ajax({
 				type : "GET",
@@ -116,7 +116,6 @@ var buildList = function(data) {
 			foodItem : $("#foodItem").val(),
 			calories : $("#calories").val(),
 		};
-		console.log(trackerObj);
 		var myPost = $.ajax({
 			type : "POST",
 			url : "rest/trackers",
@@ -141,11 +140,6 @@ var buildList = function(data) {
 }
 var buildDesc = function(tracker) {
 	$("#content").empty();
-	$("body").css('background-image',
-			'url(http://wallpapercave.com/wp/d4emJ2t.jpg)');
-	$("body").css('background-size', '100%');
-	$("body").css('background-repeat', 'no-repeat');
-	var img = $('<img>');
 	var h1 = $('<h1>');
 	var ul = $('<ul>');
 	var li2 = $('<li>');
@@ -160,16 +154,19 @@ var buildDesc = function(tracker) {
 	$('body').append(ul);
 	var backbutton = $('<button>');
 	backbutton.addClass('backbutton');
-	backbutton.text('Return to home');
+	backbutton.text('submit changes');
 	backbutton.on('click', function() {
+		$.ajax({
+		    type: "PUT",
+		    url: "rest/trackers/" + $(this).attr('id'),             //indicates updating quiz with id=1
+		    dataType: "json",
+		    contentType: 'application/json',  //setting the request headers content-type
+		    data: JSON.stringify(trackerObj)        //the data being added to the request body
+		});
 		startUp();
 		console.log("back button clicked");
 		$("#content").empty();
-//		$("body").css('background-image',
-//				'url(http://wallpapercave.com/wp/k4eop3o.jpg)');
-//		$("body").css('background-position', 'center');
-//		$("body").css('background-attachment', 'fixed');
-//		$("body").css('background-size', 'cover');
+
 		var tablediv = $("<div>");
 		tablediv.attr('id', 'table');
 		$("#content").append(tablediv);
