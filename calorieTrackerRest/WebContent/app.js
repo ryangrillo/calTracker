@@ -14,7 +14,7 @@ var startUp = function() {
 		buildList(data);
 	});
 	myReq.fail(function(xhr, status, error) {
-		console.log('It blew up again');
+		console.log('It blew up');
 		console.log(error);
 	});
 }
@@ -51,6 +51,26 @@ var buildList = function(data) {
 				console.log(status);
 				$("#table").empty();
 				buildDesc(data);
+
+				var editTracker = $("<h3>");
+				createTracker.text("change data");
+				var tablediv = $("<div>");
+				var contentdiv = $("<div>");
+				contentdiv.attr('id', 'content');
+				tablediv.attr('id', 'table');
+				$("body").append(contentdiv);
+				$("#content").append(tablediv);
+				$("#table").append(editTracker);
+				var foodName = $("<input/>").attr({
+					type : "text",
+					id : "foodItem",
+					placeholder : "name"
+				}).appendTo("#table");
+				var calories = $("<input/>").attr({
+					type : "text",
+					id : "calories",
+					placeholder : "calories"
+				}).appendTo("#table");
 			});
 			myReq.fail(function(xhr, status, error) {
 				console.log('It blew up again');
@@ -80,8 +100,8 @@ var buildList = function(data) {
 				console.log(error);
 			});
 		})
-		td.text(tracker.id + ". " + tracker.foodItem + " " +  tracker.calories);
-		
+		td.text(tracker.id + ". " + tracker.foodItem + " " + tracker.calories);
+
 		total += tracker.calories;
 		console.log("lenght:  " + tracker.size);
 		console.log("tracker.calories: " + tracker.calories);
@@ -95,6 +115,7 @@ var buildList = function(data) {
 	})
 	$('#table').append(table);
 	$('#table').append(h1Total);
+
 	var createTracker = $("<h3>");
 	createTracker.text("Add food and Calories");
 	$("#table").append(createTracker);
@@ -126,8 +147,6 @@ var buildList = function(data) {
 		myPost.done(function(data, status) {
 			console.log(data);
 			console.log(status);
-			// start(buildList); //check and fix?
-			// $("#content").empty();
 			$("body").empty();
 			buildDesc(data);
 		});
@@ -156,20 +175,39 @@ var buildDesc = function(tracker) {
 	backbutton.addClass('backbutton');
 	backbutton.text('submit changes');
 	backbutton.on('click', function() {
-		$.ajax({
-		    type: "PUT",
-		    url: "rest/trackers/" + $(this).attr('id'),             //indicates updating quiz with id=1
-		    dataType: "json",
-		    contentType: 'application/json',  //setting the request headers content-type
-		    data: JSON.stringify(trackerObj)        //the data being added to the request body
+		var trackerObj = {
+			foodItem : $("#foodItem").val(),
+			calories : $("#calories").val(),
+		};
+		var myPut = $.ajax({
+			type : "PUT",
+			url : "rest/trackers/" + tracker.id,
+			dataType : "json",
+			contentType : 'application/json',
+			data : JSON.stringify(trackerObj)
 		});
-		startUp();
-		console.log("back button clicked");
-		$("#content").empty();
-
-		var tablediv = $("<div>");
-		tablediv.attr('id', 'table');
-		$("#content").append(tablediv);
+		myPut.done(function(data, status) {
+			console.log(data);
+			console.log(status);
+			startUp();
+			console.log("back button clicked");
+			$("body").empty();
+			$("body").css('background-image',
+					'url(http://wallpapercave.com/wp/k4eop3o.jpg)');
+			$("body").css('background-position', 'center');
+			$("body").css('background-attachment', 'fixed');
+			$("body").css('background-size', 'cover');
+			var tablediv = $("<div>");
+			var contentdiv = $("<div>");
+			contentdiv.attr('id', 'content');
+			tablediv.attr('id', 'table');
+			$("body").append(contentdiv);
+			$("#content").append(tablediv);
+		});
+		myPut.fail(function(xhr, status, error) {
+			console.log('It blew up again');
+			console.log(error);
+		});
 	});
 	$("body").append(backbutton);
 }
