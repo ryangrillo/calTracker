@@ -29,11 +29,11 @@ var buildList = function(data) {
 	table.append(thead);
 	var total = 0;
 	data.forEach(function(tracker, idx, array) {
-//		if (idx % 2) {
-//			var tr = $('<tr>').css("background-color", "#ff9999");
-//		} else {
-//			var tr = $('<tr>')
-//		}
+		// if (idx % 2) {
+		// var tr = $('<tr>').css("background-color", "#ff9999");
+		// } else {
+		// var tr = $('<tr>')
+		// }
 		var tr = $('<tr>');
 		var tbody = $('<tbody>');
 		var td = $('<td>');
@@ -101,7 +101,7 @@ var buildList = function(data) {
 				console.log(error);
 			});
 		})
-		td.text(tracker.id + ". " + tracker.foodItem + " " + tracker.calories);
+		td.text(tracker.foodItem + "  |   " + tracker.calories + " cals");
 
 		total += tracker.calories;
 		console.log("lenght:  " + tracker.size);
@@ -109,18 +109,18 @@ var buildList = function(data) {
 		console.log("total:  " + total);
 		h1Total.text("total Calories: " + total);
 		tr.append(td);
-		
-		
 		tr.append(input);
 		tr.append(deleteItem);
 		tbody.append(tr);
 		table.append(tbody);
-	})
+	})  //end foreach
+	
+	
 	$('#table').append(table);
 	$('#table').append(h1Total);
 
 	var createTracker = $("<h3>");
-	createTracker.text("Add food and Calories");
+	createTracker.text("Add food Item");
 	$("#table").append(createTracker);
 	var foodName = $("<input/>").attr({
 		type : "text",
@@ -132,6 +132,7 @@ var buildList = function(data) {
 		id : "calories",
 		placeholder : "calories"
 	}).appendTo("#table");
+
 	var createTrackerButton = $('<button>');
 	createTrackerButton.addClass('button').text("Add Food Item").appendTo(
 			"#table");
@@ -140,6 +141,8 @@ var buildList = function(data) {
 			foodItem : $("#foodItem").val(),
 			calories : $("#calories").val(),
 		};
+
+
 		var myPost = $.ajax({
 			type : "POST",
 			url : "rest/trackers",
@@ -151,13 +154,12 @@ var buildList = function(data) {
 			console.log(data);
 			console.log(status);
 			startUp();
-			console.log("back button clicked");
 			$("body").empty();
-//			$("body").css('background-image',
-//					'url(http://wallpapercave.com/wp/k4eop3o.jpg)');
-//			$("body").css('background-position', 'center');
-//			$("body").css('background-attachment', 'fixed');
-//			$("body").css('background-size', 'cover');
+			// $("body").css('background-image',
+			// 'url(http://wallpapercave.com/wp/k4eop3o.jpg)');
+			// $("body").css('background-position', 'center');
+			// $("body").css('background-attachment', 'fixed');
+			// $("body").css('background-size', 'cover');
 			var tablediv = $("<div>");
 			var contentdiv = $("<div>");
 			contentdiv.attr('id', 'content');
@@ -207,11 +209,11 @@ var buildDesc = function(tracker) {
 			startUp();
 			console.log("back button clicked");
 			$("body").empty();
-//			$("body").css('background-image',
-//					'url(http://wallpapercave.com/wp/k4eop3o.jpg)');
-//			$("body").css('background-position', 'center');
-//			$("body").css('background-attachment', 'fixed');
-//			$("body").css('background-size', 'cover');
+			// $("body").css('background-image',
+			// 'url(http://wallpapercave.com/wp/k4eop3o.jpg)');
+			// $("body").css('background-position', 'center');
+			// $("body").css('background-attachment', 'fixed');
+			// $("body").css('background-size', 'cover');
 			var tablediv = $("<div>");
 			var contentdiv = $("<div>");
 			contentdiv.attr('id', 'content');
