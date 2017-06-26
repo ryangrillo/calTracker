@@ -29,11 +29,12 @@ var buildList = function(data) {
 	table.append(thead);
 	var total = 0;
 	data.forEach(function(tracker, idx, array) {
-		if (idx % 2) {
-			var tr = $('<tr>').css("background-color", "#ff9999");
-		} else {
-			var tr = $('<tr>')
-		}
+//		if (idx % 2) {
+//			var tr = $('<tr>').css("background-color", "#ff9999");
+//		} else {
+//			var tr = $('<tr>')
+//		}
+		var tr = $('<tr>');
 		var tbody = $('<tbody>');
 		var td = $('<td>');
 		var input = $('<button>');
@@ -108,6 +109,8 @@ var buildList = function(data) {
 		console.log("total:  " + total);
 		h1Total.text("total Calories: " + total);
 		tr.append(td);
+		
+		
 		tr.append(input);
 		tr.append(deleteItem);
 		tbody.append(tr);
@@ -147,8 +150,20 @@ var buildList = function(data) {
 		myPost.done(function(data, status) {
 			console.log(data);
 			console.log(status);
+			startUp();
+			console.log("back button clicked");
 			$("body").empty();
-			buildDesc(data);
+//			$("body").css('background-image',
+//					'url(http://wallpapercave.com/wp/k4eop3o.jpg)');
+//			$("body").css('background-position', 'center');
+//			$("body").css('background-attachment', 'fixed');
+//			$("body").css('background-size', 'cover');
+			var tablediv = $("<div>");
+			var contentdiv = $("<div>");
+			contentdiv.attr('id', 'content');
+			tablediv.attr('id', 'table');
+			$("body").append(contentdiv);
+			$("#content").append(tablediv);
 		});
 		myPost.fail(function(xhr, status, error) {
 			console.log('It blew up again');
@@ -192,11 +207,11 @@ var buildDesc = function(tracker) {
 			startUp();
 			console.log("back button clicked");
 			$("body").empty();
-			$("body").css('background-image',
-					'url(http://wallpapercave.com/wp/k4eop3o.jpg)');
-			$("body").css('background-position', 'center');
-			$("body").css('background-attachment', 'fixed');
-			$("body").css('background-size', 'cover');
+//			$("body").css('background-image',
+//					'url(http://wallpapercave.com/wp/k4eop3o.jpg)');
+//			$("body").css('background-position', 'center');
+//			$("body").css('background-attachment', 'fixed');
+//			$("body").css('background-size', 'cover');
 			var tablediv = $("<div>");
 			var contentdiv = $("<div>");
 			contentdiv.attr('id', 'content');
